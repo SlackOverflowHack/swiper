@@ -1,4 +1,4 @@
 export const en = {
     "email": "Email",
-    "password": "Passwort"
+    "password": "Password"
 };
