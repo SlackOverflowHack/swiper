@@ -22,10 +22,10 @@ const HeaderComponent = () => {
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
-        <Image
+        {/* <Image
           style={tw('h-14 w-14 rounded-full')}
           source={require('../logo.png')}
-        />
+        /> */}
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Chats')}>
         <Ionicons name='chatbubble-sharp' size={30} color={'#FF5864'} />

@@ -9,6 +9,8 @@ import {
 import React, { useState } from 'react';
 import { useTailwind } from 'tailwind-rn/dist';
 import useAuth from '../hooks/useAuth';
+import { Localized } from '../localized';
+
 
 const LoginScreen = () => {
   const tw = useTailwind();
@@ -32,7 +34,7 @@ const LoginScreen = () => {
         <View
           style={tw('rounded-lg bg-black/30 px-5 py-3 items-start w-3/4 mb-5')}
         >
-          <Text style={tw('text-white font-bold text-xl mb-3')}>Email</Text>
+          <Text style={tw('text-white font-bold text-xl mb-3')}>{Localized('email')}</Text>
           <TextInput
             value={email}
             onChangeText={setEmail}
@@ -44,7 +46,7 @@ const LoginScreen = () => {
         <View
           style={tw('rounded-lg bg-black/30 px-5 py-3 items-start w-3/4 mb-5')}
         >
-          <Text style={tw('text-white font-bold text-xl mb-3')}>Password</Text>
+          <Text style={tw('text-white font-bold text-xl mb-3')}>{Localized('password')}</Text>
           <TextInput
             value={pwd}
             onChangeText={setPwd}
