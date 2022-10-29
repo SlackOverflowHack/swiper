@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigator from './TabNavigator';
 import useAuth from '../hooks/useAuth';
 import { View } from 'react-native';
-import ChatsScreen from '../screens/ChatsScreen';
+import ChatsScreen from '../screens/InterestsScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import MatchScreen from '../screens/MatchScreen';
 import LoginScreen from '../screens/LoginScreen';

@@ -3,7 +3,7 @@ import React from 'react';
 import { useTailwind } from 'tailwind-rn/dist';
 import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
-import { ChatsScreenNavigationProps } from '../screens/ChatsScreen';
+import { ChatsScreenNavigationProps } from '../screens/InterestsScreen';
 import { Ionicons } from '@expo/vector-icons';
 
 const HeaderComponent = () => {
@@ -22,10 +22,10 @@ const HeaderComponent = () => {
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
-        <Image
+        {/* <Image
           style={tw('h-14 w-14 rounded-full')}
           source={require('../logo.png')}
-        />
+        /> */}
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Chats')}>
         <Ionicons name='chatbubble-sharp' size={30} color={'#FF5864'} />

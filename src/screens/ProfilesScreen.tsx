@@ -13,7 +13,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Swiper from 'react-native-deck-swiper';
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import HeaderComponent from '../components/HeaderComponent';
-import { ChatsScreenNavigationProps } from './ChatsScreen';
+import { ChatsScreenNavigationProps } from './InterestsScreen';
 import { firebaseDb } from '../firebase';
 import {
   doc,
