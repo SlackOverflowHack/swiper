@@ -28,6 +28,7 @@ import {
   orderBy
 } from '@firebase/firestore';
 import { firebaseDb } from '../firebase';
+import { Localize } from '../localized';
 
 const ChatScreen = () => {
   const tw = useTailwind();
@@ -104,7 +105,7 @@ const ChatScreen = () => {
         >
           <TextInput
             style={tw('h-10 text-lg w-4/5')}
-            placeholder='Send Message...'
+            placeholder={Localize('send-message')}
             onChangeText={setInput}
             onSubmitEditing={sendMessage}
             value={input}

@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TabStackParamList } from '../navigation/TabNavigator';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { generateId } from '../lib/generateId';
+import { Localize } from '../localized';
 
 const MatchScreen = () => {
   const tw = useTailwind();
@@ -45,7 +46,7 @@ const MatchScreen = () => {
         />
         <View>
           <Text style={tw('text-white text-center mt-5')}>
-            You and {matchedProfile.displayName} have liked each other.
+            {Localize('liked-with-x', { name: matchedProfile.displayName })}
           </Text>
         </View>
         <View style={tw('flex-row w-full items-center justify-evenly mt-5')}>
@@ -79,7 +80,7 @@ const MatchScreen = () => {
             'bg-white m-5 px-8 py-6 rounded-full mt-20 text-center font-bold text-xl'
           )}
         >
-          <Text style={tw('text-center')}>Send a Message</Text>
+          <Text style={tw('text-center')}>{Localize('send-message')}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

@@ -38,7 +38,7 @@ const LoginScreen = () => {
           <TextInput
             value={email}
             onChangeText={setEmail}
-            placeholder='Email Address'
+            placeholder={Localize('email-address')}
             keyboardType='email-address'
             style={tw('bg-gray-50 w-full rounded px-3 py-2')}
           />
@@ -51,7 +51,7 @@ const LoginScreen = () => {
             value={pwd}
             onChangeText={setPwd}
             secureTextEntry
-            placeholder='Password'
+            placeholder={Localize('password')}
             style={tw('bg-gray-50 w-full rounded px-3 py-2')}
           />
         </View>
@@ -63,7 +63,7 @@ const LoginScreen = () => {
           }}
         >
           <Text style={tw(' text-white font-semibold p-4')}>
-            Sign in &amp; get swipin&lsquo;
+            {Localize('signin-swipin')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -71,7 +71,7 @@ const LoginScreen = () => {
           onPress={() => register(email, pwd)}
           disabled={formIncomplete}
         >
-          <Text style={tw('text-white font-semibold p-4')}>Register</Text>
+          <Text style={tw('text-white font-semibold p-4')}>{Localize('register')}</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>

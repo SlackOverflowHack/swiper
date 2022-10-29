@@ -1,4 +1,9 @@
 export const de = {
     "email": "E-Mail",
-    "password": "Passwort"
+    "email-address": "E-Mail Adresse",
+    "password": "Passwort",
+    "register": "Registrieren",
+    "signin-swipin": "Anmelden & Swipen",
+    "send-message": "Nachricht senden",
+    "liked-with-x": "Du und {{name}} habe euch gegenseitig geliked.",
 };
