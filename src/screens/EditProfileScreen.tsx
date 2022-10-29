@@ -13,12 +13,12 @@ import { useTailwind } from 'tailwind-rn/dist';
 import useAuth from '../hooks/useAuth';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { ProfilesScreenNavigationProp } from './ProfilesScreen';
+import { SwipeScreenNavigationProp } from './SwipeScreen';
 import { setDoc, doc, serverTimestamp, getDoc } from '@firebase/firestore';
 import { firebaseDb } from '../firebase';
 
 const EditProfileScreen = () => {
-  const navigation = useNavigation<ProfilesScreenNavigationProp>();
+  const navigation = useNavigation<SwipeScreenNavigationProp>();
   const tw = useTailwind();
   const { user } = useAuth();
   const [image, setImage] = useState<string | undefined>(

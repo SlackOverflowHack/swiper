@@ -8,7 +8,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { TabStackParamList } from '../navigation/TabNavigator';
-import { ProfilesScreenNavigationProp } from './ProfilesScreen';
+import { SwipeScreenNavigationProp } from './SwipeScreen';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ChatHeaderComponent from '../components/ChatHeaderComponent';
 import { onSnapshot, collection, query, where } from '@firebase/firestore';
@@ -23,7 +23,7 @@ export type ChatsScreenNavigationProps = CompositeNavigationProp<
 >;
 
 const InterestsScreen = () => {
-  const navigation = useNavigation<ProfilesScreenNavigationProp>();
+  const navigation = useNavigation<SwipeScreenNavigationProp>();
   const [matches, setMatches] = useState<ChatMatch[]>([]);
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);

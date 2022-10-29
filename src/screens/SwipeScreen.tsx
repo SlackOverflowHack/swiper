@@ -31,12 +31,12 @@ import useAuth from '../hooks/useAuth';
 import { Unsubscribe } from 'firebase/auth';
 import { generateId } from '../lib/generateId';
 
-export type ProfilesScreenNavigationProp = CompositeNavigationProp<
+export type SwipeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabStackParamList, 'Profiles'>,
   NativeStackNavigationProp<RootStackParamList>
 >;
 
-const ProfilesScreen = () => {
+const SwipeScreen = () => {
   const tw = useTailwind();
   const [finished, setFinished] = useState(false);
   const [profiles, setProfiles] = useState<Profile[]>([]);
@@ -256,7 +256,7 @@ const ProfilesScreen = () => {
   );
 };
 
-export default ProfilesScreen;
+export default SwipeScreen;
 
 const styles = StyleSheet.create({
   cardShadow: {

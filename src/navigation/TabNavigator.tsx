@@ -2,14 +2,14 @@ import React, { useLayoutEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import InterestsScreen from '../screens/InterestsScreen';
-import ProfilesScreen from '../screens/ProfilesScreen';
+import SwipeScreen from '../screens/SwipeScreen';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import useAuth from '../hooks/useAuth';
 
 export type TabStackParamList = {
   Interests: undefined;
-  Profiles: undefined;
+  Swiper: undefined;
   Home: undefined;
 };
 
@@ -26,7 +26,7 @@ function TabNavigator(): JSX.Element {
 
   return (
     <Tabs.Navigator
-      initialRouteName='Profiles'
+      initialRouteName='Swiper'
       screenOptions={({ route }) => ({
         tabBarStyle: { borderTopWidth: 0 },
         headerShown: false,
@@ -52,7 +52,7 @@ function TabNavigator(): JSX.Element {
                   color={focused ? '#630300' : 'white'}
                 />
               );
-            case 'Profiles':
+            case 'Swiper':
               return (
                 <FontAwesome
                   name='user'
@@ -64,9 +64,15 @@ function TabNavigator(): JSX.Element {
         }
       })}
     >
-      <Tabs.Screen name='Home' component={EditProfileScreen} />
-      <Tabs.Screen name='Profiles' component={ProfilesScreen} />
-      <Tabs.Screen name='Interests' component={InterestsScreen} />
+      <Tabs.Screen name='Home' component={EditProfileScreen} options={{
+          tabBarLabel: 'Home'
+      }}/>
+      <Tabs.Screen name='Swiper' component={SwipeScreen} options={{
+          tabBarLabel: 'Swipe around'
+      }}/>
+      <Tabs.Screen name='Interests' component={InterestsScreen} options={{
+          tabBarLabel: 'Interests'
+      }}/>
     </Tabs.Navigator>
   );
 }
