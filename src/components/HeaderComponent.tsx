@@ -3,7 +3,7 @@ import React from 'react';
 import { useTailwind } from 'tailwind-rn/dist';
 import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
-import { ChatsScreenNavigationProps } from '../screens/ChatsScreen';
+import { ChatsScreenNavigationProps } from '../screens/InterestsScreen';
 import { Ionicons } from '@expo/vector-icons';
 
 const HeaderComponent = () => {

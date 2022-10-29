@@ -22,7 +22,7 @@ export type ChatsScreenNavigationProps = CompositeNavigationProp<
   NativeStackNavigationProp<RootStackParamList>
 >;
 
-const ChatsScreen = () => {
+const InterestsScreen = () => {
   const navigation = useNavigation<ProfilesScreenNavigationProp>();
   const [matches, setMatches] = useState<ChatMatch[]>([]);
   const { user } = useAuth();
@@ -54,4 +54,4 @@ const ChatsScreen = () => {
   );
 };
 
-export default ChatsScreen;
+export default InterestsScreen;
