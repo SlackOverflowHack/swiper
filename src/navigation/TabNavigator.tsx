@@ -64,9 +64,7 @@ function TabNavigator(): JSX.Element {
         }
       })}
     >
-      {/* <Tabs.Screen name='Home' component={EditProfileScreen} /> */}
-      {/* <Tabs.Screen name='Profiles' component={ProfilesScreen} /> */}
-      {/* <Tabs.Screen name='Chats' component={ChatsScreen} /> */}
+      <Tabs.Screen name='Chats' component={ChatsScreen} />
     </Tabs.Navigator>
   );
 }

@@ -3,16 +3,20 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigator from './TabNavigator';
 import useAuth from '../hooks/useAuth';
 import { View } from 'react-native';
+import ChatsScreen from '../screens/ChatsScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
+import MatchScreen from '../screens/MatchScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 export type RootStackParamList = {
   Main: undefined;
-  // Chat: ChatMatch;
+  Chat: ChatMatch;
   Login: undefined;
   EditProfile: undefined;
-  // Match: {
-  //   userProfile: Profile;
-  //   matchedProfile: Profile
-  // };
+  Match: {
+    userProfile: Profile;
+    matchedProfile: Profile
+  };
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -31,29 +35,29 @@ const RootNavigator = () => {
         <React.Fragment>
           <RootStack.Group>
             <RootStack.Screen name='Main' component={TabNavigator} />
-            {/* <RootStack.Screen name='Chat' component={ChatScreen} /> */}
+            <RootStack.Screen name='Chat' component={ChatsScreen} />
           </RootStack.Group>
           <RootStack.Group
             screenOptions={{
               presentation: 'modal'
             }}
           >
-            {/* <RootStack.Screen
+            <RootStack.Screen
               name='EditProfile'
               component={EditProfileScreen}
-            /> */}
+            /> 
           </RootStack.Group>
           <RootStack.Group
             screenOptions={{
               presentation: 'transparentModal'
             }}
           >
-            {/* <RootStack.Screen name='Match' component={MatchScreen} /> */}
+            <RootStack.Screen name='Match' component={MatchScreen} />
           </RootStack.Group>
         </React.Fragment>
       ) : (
         <RootStack.Group>
-          {/* <RootStack.Screen name='Login' component={LoginScreen} /> */}
+          <RootStack.Screen name='Login' component={LoginScreen} />
         </RootStack.Group>
       )}
     </RootStack.Navigator>
