@@ -13,7 +13,9 @@ class Localized {
 
   private constructor() {
     this.translations = {
+      'de': de,
       'de-DE': de,
+      'en': en,
       'en-EN': en,
     };
 
