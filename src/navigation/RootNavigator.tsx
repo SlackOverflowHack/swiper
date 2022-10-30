@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth';
 import { ActivityIndicator, View } from 'react-native';
 import LoginScreen from '../screens/LoginScreen';
 import { useTailwind } from 'tailwind-rn/dist';
-import RegisterScreen from '../screens/REgisterScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import SettingsScreen from '../screens/modals/SettingsScreen';
 
