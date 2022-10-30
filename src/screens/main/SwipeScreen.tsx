@@ -73,12 +73,6 @@ const SwipeScreen = () => {
   }, []);
 
   const swipeLeft = async (index: number) => {
-    console.log('swiped left', index);
-  };
-
-  const swipeRight = async (index: number) => {
-    console.log('swiped right', user);
-    //console.log('swiped right', courses[index]);
     const requestOptions = {
       method: 'POST',
       headers: { 
@@ -87,9 +81,19 @@ const SwipeScreen = () => {
        },
       body: JSON.stringify({ course_id: courses[index].id })
     };
-    fetch(Constants.expoConfig?.extra?.SWIPEBACK_API + '/api/course/addInterestedMember', requestOptions)
-        .then(response => response.json())
-        .then(data => console.log(data) );
+    fetch(Constants.expoConfig?.extra?.SWIPEBACK_API + '/api/course/addUninterestedMember', requestOptions);
+  };
+
+  const swipeRight = async (index: number) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + user.accessToken
+       },
+      body: JSON.stringify({ course_id: courses[index].id })
+    };
+    fetch(Constants.expoConfig?.extra?.SWIPEBACK_API + '/api/course/addInterestedMember', requestOptions);
   };
 
   return loading ? (
