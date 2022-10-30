@@ -46,7 +46,8 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const login = useMemo(
     () => async (email: string, password: string) => {
       try {
-        await signInWithEmailAndPassword(auth, email, password);
+        let cred: any = await signInWithEmailAndPassword(auth, email, password);
+        localStorage.setItem('accessToken', cred.user.accessToken);
       } catch (err) {
         console.log(err);
       }

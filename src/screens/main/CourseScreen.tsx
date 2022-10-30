@@ -13,8 +13,11 @@ const CourseScreen = () => {
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState<Kurs[]>([]);
   const { user } = useAuth();
+
+  const mycurses = [];
   useEffect(() => {
     setLoading(true);
+    console.log("foo");
     getDocs(collection(firebaseDb, 'courses')).then((result) => {
       console.log(result.docs.length);
       const fireCourses = result.docs
@@ -34,6 +37,8 @@ const CourseScreen = () => {
       setLoading(false);
     });
   }, []);
+
+  console.log(courses);
 
   return loading ? (
     <View style={tw('flex-1 items-center justify-center')}>

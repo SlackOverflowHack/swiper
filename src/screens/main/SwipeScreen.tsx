@@ -45,10 +45,10 @@ const fake_data: Kurs[] = [
       barrierefrei: false,
       name: 'Einkaufzentrum'
     },
-    permMember: [],
+    permanentMembers: [],
     schlachwoerter: ['fitness', 'tennis'],
     termine: {
-      asd: {
+      0: {
         abmeldungen: [],
         anmeldungen: [],
         datum: new Date(Date.parse('2022-11-05'))
@@ -82,6 +82,18 @@ const SwipeScreen = () => {
 
   const swipeRight = async (index: number) => {
     console.log('swiped right', index);
+    console.log('swiped right', courses[index]);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+       },
+      body: JSON.stringify({ course_id: courses[index] })
+    };
+    fetch(process.env.SWIPEBACK_API + '/api/course/addInterestedMember', requestOptions)
+        .then(response => response.json())
+        .then(data => console.log(data) );
   };
 
   return loading ? (
