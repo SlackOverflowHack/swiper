@@ -3,14 +3,14 @@ type Kurs = {
     titel: string;
     beschreibung: string;
     schlachwoerter: string[];
-    permMember: string[];
     kontakt: Kontakt;
     ort: Ort;
     termine: {
-        [id: string]: Termin;
+        [id: number]: Termin;
     };
     maxanzahl: number;
     intern: boolean;
+    permanentMembers: string[];
     interestedMembers: string[];
     uninterestedMembers: string[];
     zielgruppe: string[];

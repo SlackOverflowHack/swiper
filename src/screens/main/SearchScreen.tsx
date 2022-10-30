@@ -29,8 +29,8 @@ const SearchScreen = () => {
       setCourses(
         result.docs
           .filter(
-            (d) =>
-              !(d.data().permanentMembers as string[]).find(
+            (course) =>
+              !(course.data().permanentMembers as string[]).find(
                 (v) => v === user?.uid
               )
           )

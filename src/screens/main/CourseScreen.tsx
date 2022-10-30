@@ -17,20 +17,20 @@ const CourseScreen = () => {
     setLoading(true);
     getDocs(collection(firebaseDb, 'courses')).then((result) => {
       console.log(result.docs.length);
-      const fireCOurses = result.docs
+      const fireCourses = result.docs
         .map((doc) => ({
           ...(doc.data() as unknown as Kurs),
           id: doc.id
         }))
         .filter(
           (course) =>
-            course.permMember.find((id) => id === user?.uid) ||
+            course.permanentMembers.find((id) => id === user?.uid) ||
             Object.keys(course.termine).some((k) =>
-              course.termine[k].anmeldungen.find((id) => id === user?.uid)
+              course.termine[parseInt(k)].anmeldungen.find((id) => id === user?.uid)
             )
         );
-      setCourses(fireCOurses);
-      console.log(fireCOurses);
+      setCourses(fireCourses);
+      console.log(fireCourses);
       setLoading(false);
     });
   }, []);

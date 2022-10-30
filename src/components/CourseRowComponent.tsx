@@ -20,9 +20,10 @@ const CourseRowComponent: React.FC<Props> = ({ course }) => {
 
           {course.termine?.length && (
             <Text style={{ color: 'white', marginLeft: 5 }}>
-              {course.termine[
-                Object.keys(course.termine)[0]
-              ].datum.toLocaleDateString(Localization.locale, {
+              {(new Date(course.termine[
+                //Object.keys(course.termine)[0]
+                0
+              ].datum)).toLocaleDateString(Localization.locale, {
                 weekday: 'long'
               })}{' '}
             </Text>
