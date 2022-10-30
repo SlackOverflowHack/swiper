@@ -55,9 +55,9 @@ const SwiperCard: React.FC<Props> = ({ course }) => {
               <Feather name='clock' color='white' size={22} />
 
               <Text style={{ color: 'white', marginLeft: 5 }}>
-                {course.termine[
-                  Object.keys(course.termine)[0]
-                ].datum.toLocaleDateString(Localization.locale, {
+                {(new Date(course.termine[
+                  0
+                ].datum)).toLocaleDateString(Localization.locale, {
                   weekday: 'long'
                 })}{' '}
               </Text>

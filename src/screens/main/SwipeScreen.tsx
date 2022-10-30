@@ -1,5 +1,5 @@
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   CompositeNavigationProp,
   useNavigation
@@ -15,51 +15,17 @@ import { Entypo, AntDesign } from '@expo/vector-icons';
 import HeaderComponent from '../../components/HeaderComponent';
 import { Localize } from '../../localized';
 import SwiperCard from '../../components/swiper/SwiperCard';
+import { collection, getDocs } from 'firebase/firestore';
+import { firebaseDb } from '../../firebase';
+import useAuth from '../../hooks/useAuth';
+import { User } from 'firebase/auth';
+import Constants from 'expo-constants';
 
 export type SwipeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabStackParamList, 'Search'>,
   NativeStackNavigationProp<RootStackParamList>
 >;
 
-const fake_data: Kurs[] = [
-  {
-    id: '1',
-    beschreibung:
-      'This is a course description with more infos about the course.',
-    intern: false,
-    kontakt: {
-      anrede: 'Herr',
-      name: 'Johann',
-      vorname: 'Schnee',
-      email: 'j.schnee@google.com'
-    },
-    maxanzahl: 20,
-    ort: {
-      adresse: {
-        land: 'Deutschland',
-        ort: 'Fulda',
-        plz: '36316',
-        strasse: 'Einestrasse 5',
-        ortsteil: 'Neben dir'
-      },
-      barrierefrei: false,
-      name: 'Einkaufzentrum'
-    },
-    permanentMembers: [],
-    schlachwoerter: ['fitness', 'tennis'],
-    termine: {
-      0: {
-        abmeldungen: [],
-        anmeldungen: [],
-        datum: new Date(Date.parse('2022-11-05'))
-      }
-    },
-    titel: 'Tennis Amateur Tournament',
-    interestedMembers: [],
-    uninterestedMembers: [],
-    zielgruppe: ['oldies but goldies']
-  }
-];
 
 const SwipeScreen = () => {
   const tw = useTailwind();
@@ -70,9 +36,38 @@ const SwipeScreen = () => {
   const [swiperIndex, setSwiperIndex] = useState(0);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const user = useAuth().user as unknown as User;
+
+  useEffect(() => {
+    console.log(Constants.expoConfig?.extra?.SWIPEBACK_API);
+    getDocs(collection(firebaseDb, 'courses')).then((result) => {
+      console.log(result.docs.length);
+
+      const fireCourses: Kurs[] = [];
+
+      result.docs.forEach((doc) => {
+        let course: Kurs = doc.data() as unknown as Kurs;
+        course.id = doc.id;
+
+        /*
+        (course) =>
+            course.permanentMembers.find((id) => id === user?.uid) ||
+            Object.keys(course.termine).some((k) =>
+              course.termine[parseInt(k)].anmeldungen.find((id) => id === user?.uid)
+            )
+            */
+
+        fireCourses.push(course);
+      })
+      
+      setCourses(fireCourses);
+      console.log(fireCourses);
+      setLoading(false);
+    });
+  }, []);
 
   useLayoutEffect(() => {
-    setCourses([...fake_data.reverse()]);
+    setCourses([...courses.reverse()]);
     setLoading(false);
   }, []);
 
@@ -81,17 +76,17 @@ const SwipeScreen = () => {
   };
 
   const swipeRight = async (index: number) => {
-    console.log('swiped right', index);
-    console.log('swiped right', courses[index]);
+    console.log('swiped right', user);
+    //console.log('swiped right', courses[index]);
     const requestOptions = {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+        'Authorization': 'Bearer ' + user.accessToken
        },
-      body: JSON.stringify({ course_id: courses[index] })
+      body: JSON.stringify({ course_id: courses[index].id })
     };
-    fetch(process.env.SWIPEBACK_API + '/api/course/addInterestedMember', requestOptions)
+    fetch(Constants.expoConfig?.extra?.SWIPEBACK_API + '/api/course/addInterestedMember', requestOptions)
         .then(response => response.json())
         .then(data => console.log(data) );
   };

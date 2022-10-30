@@ -38,6 +38,7 @@ module.exports = {
       firebaseStorageBucket: process.env.FIREBASE_STORAGE_BUCKET,
       firebaseMessagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
       firebaseAppId: process.env.FIREBASE_APP_ID,
+      SWIPEBACK_API: process.env.SWIPEBACK_API,
       "eas": {
         "projectId": "520d1ad3-2a74-4e15-ae6c-e7bd121a3d2f"
       }
