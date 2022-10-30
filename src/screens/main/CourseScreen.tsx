@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import CourseRowComponent from '../../components/CourseRowComponent';
 import HeaderComponent from '../../components/HeaderComponent';
 import { useTailwind } from 'tailwind-rn/dist';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import { firebaseDb } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import { User } from 'firebase/auth';
@@ -19,7 +19,7 @@ const CourseScreen = () => {
   useEffect(() => {
     setLoading(true);
     console.log("foo");
-    getDocs(collection(firebaseDb, 'courses')).then((result) => {
+    return onSnapshot(collection(firebaseDb, 'courses'), (result) => {
       const fireCourses: Kurs[] = [];
 
       result.docs.forEach((doc) => {

@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 import HeaderComponent from '../../components/HeaderComponent';
 import { useTailwind } from 'tailwind-rn/dist';
 import CourseRowComponent from '../../components/CourseRowComponent';
-import { collection, query, getDocs } from 'firebase/firestore';
+import { collection, query, getDocs, onSnapshot } from 'firebase/firestore';
 import { firebaseDb } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import { Localize } from '../../localized';
@@ -25,7 +25,7 @@ const SearchScreen = () => {
 
   useEffect(() => {
     setLoading(true);
-    getDocs(query(collection(firebaseDb, 'courses'))).then((result) => {
+    return onSnapshot(collection(firebaseDb, 'courses'), (result) => {
       setCourses(
         result.docs
           .filter(
