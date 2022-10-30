@@ -3,9 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome, Entypo, MaterialIcons } from '@expo/vector-icons';
 import { Localize } from '../localized';
-import DummyScreen from '../screens/DummyScreen';
 import SwipeScreen from '../screens/main/SwipeScreen';
 import SearchScreen from '../screens/main/SearchScreen';
+import CourseScreen from '../screens/main/CourseScreen';
 
 export type TabStackParamList = {
   Search: undefined;
@@ -81,7 +81,7 @@ function TabNavigator(): JSX.Element {
       />
       <Tabs.Screen
         name='MeineKurse'
-        component={DummyScreen}
+        component={CourseScreen}
         options={{
           tabBarLabel: Localize('tabMyStuffLabel')
         }}

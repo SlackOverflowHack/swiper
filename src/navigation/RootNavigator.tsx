@@ -5,9 +5,9 @@ import useAuth from '../hooks/useAuth';
 import { ActivityIndicator, View } from 'react-native';
 import LoginScreen from '../screens/LoginScreen';
 import { useTailwind } from 'tailwind-rn/dist';
-import DummyScreen from '../screens/DummyScreen';
 import RegisterScreen from '../screens/REgisterScreen';
 import DetailsScreen from '../screens/DetailsScreen';
+import SettingsScreen from '../screens/modals/SettingsScreen';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -15,7 +15,7 @@ export type RootStackParamList = {
 
   Main: undefined;
 
-  KursDetails: { course: Veranstaltung };
+  KursDetails: { course: Kurs };
 
   Settings: undefined;
 };
@@ -47,7 +47,7 @@ const RootNavigator = () => {
             }}
           >
             <RootStack.Screen name='KursDetails' component={DetailsScreen} />
-            <RootStack.Screen name='Settings' component={DummyScreen} />
+            <RootStack.Screen name='Settings' component={SettingsScreen} />
           </RootStack.Group>
         </React.Fragment>
       ) : (

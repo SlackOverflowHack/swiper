@@ -1,12 +1,13 @@
 import { View, TouchableOpacity, Text } from 'react-native';
 import React from 'react';
 import { useTailwind } from 'tailwind-rn/dist';
-import { Localize } from '../localized';
+import * as Localization from 'expo-localization';
 interface Props {
-  course: Veranstaltung;
+  course: Kurs;
 }
 const CourseRowComponent: React.FC<Props> = ({ course }) => {
   const tw = useTailwind();
+  console.log(course);
   return (
     <TouchableOpacity>
       <View
@@ -15,17 +16,15 @@ const CourseRowComponent: React.FC<Props> = ({ course }) => {
         )}
       >
         <View>
-          <Text>{course.name}</Text>
-          {course.wochentag && course.termin && (
+          <Text>{course.titel}</Text>
+
+          {course.termine?.length && (
             <Text style={{ color: 'white', marginLeft: 5 }}>
-              {course.wochentag?.join(', ')}{' '}
-              {course.termin && (
-                <React.Fragment>
-                  {course.wochentag ? '-' : ''} {course.termin?.beginn_uhrzeit}{' '}
-                  {Localize('swipeCardTimeSeparator')}{' '}
-                  {course.termin?.ende_uhrzeit} {Localize('swipeCardTimeEnd')}
-                </React.Fragment>
-              )}
+              {course.termine[
+                Object.keys(course.termine)[0]
+              ].datum.toLocaleDateString(Localization.locale, {
+                weekday: 'long'
+              })}{' '}
             </Text>
           )}
         </View>

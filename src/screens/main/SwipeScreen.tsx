@@ -21,105 +21,50 @@ export type SwipeScreenNavigationProp = CompositeNavigationProp<
   NativeStackNavigationProp<RootStackParamList>
 >;
 
-const fake_data: Veranstaltung[] = [
+const fake_data: Kurs[] = [
   {
-    tags: ['tennis', 'playingWithBalls'],
-    beginn_datum: new Date(),
-    dvv_kategorie: {
-      version: '1'
-    },
-    guid: '123',
-    name: 'First post with a super super super super long title so that i can test the layout',
-    nummer: '1',
-    text: [
-      { eigenschaft: 'Pg1', text: 'Lorem ipsum dolor' },
-      { eigenschaft: 'Pg1', text: 'Lorem ipsum dolor' }
-    ],
-    veranstaltungsort: {
-      adresse: {
-        land: 'Deutschland',
-        ort: 'Fulda',
-        plz: '33333',
-        strasse: 'Einstrasse 5'
-      },
-      name: 'idk'
-    },
-    webadresse: [
-      {
-        typ: 'website',
-        uri: 'https://www.google.com'
-      }
-    ]
-  },
-  {
-    tags: ['tennis', 'playingWithBalls'],
-    beginn_datum: new Date(),
-    dvv_kategorie: {
-      version: '2'
-    },
-    guid: 'zzz',
-    name: 'Second post',
-    nummer: '2',
-    text: [
-      { eigenschaft: 'Pg1', text: 'Lorem ipsum dolor' },
-      { eigenschaft: 'Pg2', text: 'Lorem ipsum dolor' }
-    ],
-    veranstaltungsort: {
-      adresse: {
-        land: 'Deutschland',
-        ort: 'Fulda',
-        plz: '33333',
-        strasse: 'Einstrasse 12',
-        ortsteil: 'Kaiserwiesen'
-      },
-      name: 'some name'
-    },
-    webadresse: [
-      {
-        typ: 'website',
-        uri: 'https://www.google.com',
-        name: 'Hautpseite'
-      },
-      {
-        typ: 'website_mobile',
-        uri: 'https://www.google.com',
-        name: 'Mobile Hauptseite'
-      }
-    ],
-    aktuelle_teilnehmerzahl: 5,
-    maximale_teilnehmerzahl: 18,
-    anzahl_termine: 2,
-    dauer: 5.6,
-    dozent: {
-      anrede: 'Apache Attack Helicopter',
-      guid: '12312321',
+    id: '1',
+    beschreibung:
+      'This is a course description with more infos about the course.',
+    intern: false,
+    kontakt: {
+      anrede: 'Herr',
       name: 'Johann',
-      vorname: 'Schnee'
+      vorname: 'Schnee',
+      email: 'j.schnee@google.com'
     },
-    level: 'Over 9000',
-    ende_datum: new Date(),
-    schlagwort: ['asdf', 'qwe', 'zxc'],
-    preis: {
-      betrag: 12.99,
-      rabatt_moeglich: false,
-      zusatz: 'Keine Ahnung'
+    maxanzahl: 20,
+    ort: {
+      adresse: {
+        land: 'Deutschland',
+        ort: 'Fulda',
+        plz: '36316',
+        strasse: 'Einestrasse 5',
+        ortsteil: 'Neben dir'
+      },
+      barrierefrei: false,
+      name: 'Einkaufzentrum'
     },
-    untertitel: 'Untertitel',
-    wochentag: ['Dienstag', 'Mittwoch'],
-    zertifikat: [
-      {
-        name: 'Zertifikat',
-        text: 'COngrats you matter'
+    permMember: [],
+    schlachwoerter: ['fitness', 'tennis'],
+    termine: {
+      asd: {
+        abmeldungen: [],
+        anmeldungen: [],
+        datum: new Date(Date.parse('2022-11-05'))
       }
-    ],
-    zielgruppe: ['Oldies but goldies', 'Apache Attack Helicopters']
+    },
+    titel: 'Tennis Amateur Tournament',
+    interestedMembers: [],
+    uninterestedMembers: [],
+    zielgruppe: ['oldies but goldies']
   }
 ];
 
 const SwipeScreen = () => {
   const tw = useTailwind();
   const [finished, setFinished] = useState(false);
-  const [courses, setCourses] = useState<Veranstaltung[]>([]);
+  const [courses, setCourses] = useState<Kurs[]>([]);
   const swipeRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [swiperIndex, setSwiperIndex] = useState(0);

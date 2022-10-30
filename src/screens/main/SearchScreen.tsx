@@ -18,7 +18,7 @@ import { Localize } from '../../localized';
 
 const SearchScreen = () => {
   const tw = useTailwind();
-  const [courses, setCourses] = useState<Veranstaltung[]>([]);
+  const [courses, setCourses] = useState<Kurs[]>([]);
   const [loading, setLoading] = useState(true);
   const [textFilter, settextFilter] = useState('');
   const { user } = useAuth();
@@ -35,8 +35,8 @@ const SearchScreen = () => {
               )
           )
           .map((doc) => ({
-            ...(doc.data() as unknown as Veranstaltung),
-            guid: doc.id
+            ...(doc.data() as unknown as Kurs),
+            id: doc.id
           }))
           .slice(0, 250)
       );
@@ -49,7 +49,7 @@ const SearchScreen = () => {
       <ActivityIndicator size='large' color='#00ff00' />
     </View>
   ) : (
-    <View style={tw('scroll-1')}>
+    <View style={tw('flex-1')}>
       <HeaderComponent />
       {/* Search */}
       <View
@@ -74,7 +74,7 @@ const SearchScreen = () => {
       <ScrollView style={tw('px-5 pb-5')}>
         <FlatList
           data={courses}
-          keyExtractor={(c) => c.guid}
+          keyExtractor={(c) => c.id}
           renderItem={({ item }) => <CourseRowComponent course={item} />}
         />
       </ScrollView>

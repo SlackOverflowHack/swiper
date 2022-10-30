@@ -8,10 +8,10 @@ import {
 import React from 'react';
 import { useTailwind } from 'tailwind-rn/dist';
 import { Ionicons, Feather, MaterialIcons } from '@expo/vector-icons';
-import { Localize } from '../../localized';
+import * as Localization from 'expo-localization';
 
 interface Props {
-  course: Veranstaltung;
+  course: Kurs;
 }
 
 const SwiperCard: React.FC<Props> = ({ course }) => {
@@ -19,7 +19,7 @@ const SwiperCard: React.FC<Props> = ({ course }) => {
   return (
     <View
       style={[tw('bg-white rounded-xl h-3/4'), styles.cardShadow]}
-      key={course.guid}
+      key={course.id}
     >
       <ImageBackground
         resizeMode='cover'
@@ -40,38 +40,29 @@ const SwiperCard: React.FC<Props> = ({ course }) => {
           <View />
           <View>
             <Text style={tw('text-white font-bold text-2xl mb-3')}>
-              {course.name}
+              {course.titel}
             </Text>
             <View style={tw('flex flex-row items-center justify-start mb-3')}>
               <Ionicons name='location' color='white' size={24} />
               <View style={{ marginLeft: 5 }}>
                 <Text style={tw('text-white')}>
-                  {course.veranstaltungsort.adresse.strasse},{' '}
-                  {course.veranstaltungsort.adresse.plz},{' '}
-                  {course.veranstaltungsort.adresse.ort},{' '}
-                  {course.veranstaltungsort.adresse.land}
+                  {course.ort.adresse.strasse}, {course.ort.adresse.plz},{' '}
+                  {course.ort.adresse.ort}, {course.ort.adresse.land}
                 </Text>
               </View>
             </View>
-            {(course.wochentag || course.termin) && (
-              <View style={tw('flex flex-row items-center justify-start mb-3')}>
-                <Feather name='clock' color='white' size={22} />
+            <View style={tw('flex flex-row items-center justify-start mb-3')}>
+              <Feather name='clock' color='white' size={22} />
 
-                <Text style={{ color: 'white', marginLeft: 5 }}>
-                  {course.wochentag?.join(', ')}{' '}
-                  {course.termin && (
-                    <React.Fragment>
-                      {course.wochentag ? '-' : ''}{' '}
-                      {course.termin?.beginn_uhrzeit}{' '}
-                      {Localize('swipeCardTimeSeparator')}{' '}
-                      {course.termin?.ende_uhrzeit}{' '}
-                      {Localize('swipeCardTimeEnd')}
-                    </React.Fragment>
-                  )}
-                </Text>
-              </View>
-            )}
-            {(course.zielgruppe || course.level) && (
+              <Text style={{ color: 'white', marginLeft: 5 }}>
+                {course.termine[
+                  Object.keys(course.termine)[0]
+                ].datum.toLocaleDateString(Localization.locale, {
+                  weekday: 'long'
+                })}{' '}
+              </Text>
+            </View>
+            {course.zielgruppe && (
               <View style={tw('flex-row items-center justify-start mb-3')}>
                 <Feather name='target' color='white' size={22} />
                 <View
@@ -85,26 +76,24 @@ const SwiperCard: React.FC<Props> = ({ course }) => {
                   {course.zielgruppe && (
                     <Text style={{ color: 'white' }}>
                       {course.zielgruppe.join(', ')}
-                      {course.zielgruppe && course.level ? ' | ' : ''}
-                      {Localize('swipeCardFitnessLevelText')}: {course.level}
                     </Text>
                   )}
                 </View>
               </View>
             )}
-            {course.dozent && (
+            {course.kontakt && (
               <View style={tw('flex-row items-center justify-start mb-3')}>
                 <MaterialIcons name='contact-mail' color='white' size={22} />
                 <Text style={{ color: 'white', marginLeft: 5 }}>
-                  {course.dozent.titel || course.dozent.anrede}{' '}
-                  {course.dozent.vorname} {course.dozent.name}
+                  {course.kontakt.titel || course.kontakt.anrede}{' '}
+                  {course.kontakt.vorname} {course.kontakt.name}
                 </Text>
               </View>
             )}
-            {course.veranstaltungsort.name && (
+            {course.ort.name && (
               <View style={tw('flex-row items-center justify-start')}>
                 <Text style={{ color: 'white', fontStyle: 'italic' }}>
-                  {course.veranstaltungsort.name}
+                  {course.ort.name}
                 </Text>
               </View>
             )}

@@ -3,7 +3,6 @@ import React from 'react';
 import { useTailwind } from 'tailwind-rn/dist';
 import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome } from '@expo/vector-icons';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Localize } from '../localized';
@@ -25,7 +24,7 @@ const HeaderComponent = () => {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-        <FontAwesome name='gear' size={30} color={'#00AA00'} />
+        <Text></Text>
       </TouchableOpacity>
     </View>
   );

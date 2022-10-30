@@ -1,73 +1,29 @@
-type Veranstaltung = {
+type Kurs = {
+    id: string;
+    titel: string;
+    beschreibung: string;
+    schlachwoerter: string[];
+    permMember: string[];
+    kontakt: Kontakt;
+    ort: Ort;
+    termine: {
+        [id: string]: Termin;
+    };
+    maxanzahl: number;
     intern: boolean;
-    tags: string[];
-    guid: string;
-    nummer: string;
-    name: string;
-    untertitel?: string;
-    dvv_kategorie: Kategorie;
-    level?: string;
-    minimale_teilnehmerzahl?: number;
-    maximale_teilnehmerzahl?: number;
-    aktuelle_teilnehmerzahl?: number;
-    anzahl_termine?: number;
-    beginn_datum: Date;
-    dauer?: number;
-    ende_datum?: Date;
-    wochentag?: Wochentag[];
-    zielgruppe?: string[];
-    schlagwort?: string[];
-    zertifikat?: Zertifikat[];
-    text: TnsText[];
-    veranstaltungsort: Ort;
-    termin?: Termin;
-    preis?: Preis;
-    dozent?: Kontakt;
-    webadresse: Webaddresse[];
-};
-
-type Webaddresse = {
-    uri: string;
-    name?: string;
-    typ: 'website' | 'website_mobile' | 'attachent' | 'picture' | 'video';
+    interestedMembers: string[];
+    uninterestedMembers: string[];
+    zielgruppe: string[];
 };
 
 type Termin = {
-    beginn_datum: Date;
-    beginn_uhrzeit?: string;
-    ende_uhrzeit?: string;
-};
-
-type Preis = {
-    betrag: number;
-    rabatt_moeglich?: boolean;
-    zusatz?: string;
-};
-
-type Ort = {
-    name?: string;
-    adresse: Adresse;
-    barrierefrei?: boolean;
-};
-
-type TnsText = {
-    eigenschaft: string;
-    text?: string;
-};
-
-type Zertifikat = {
-    name: string;
-    text: string;
-};
-
-type Wochentag = 'Montag' | 'Dienstag' | 'Mittwoch' | 'Donnerstag' | 'Freitag' | 'Samstag' | 'Sonntag';
-
-type Kategorie = {
-    version: string;
+    anmeldungen: string[],
+    abmeldungen: string[],
+    datum: Date;
 };
 
 type Kontakt = {
-    guid?: string;
+    email?: string;
     anrede?: string;
     titel?: string;
     name?: string;
@@ -80,4 +36,10 @@ type Adresse = {
     ort: string;
     ortsteil?: string;
     strasse: string;
+};
+
+type Ort = {
+    name?: string;
+    adresse: Adresse;
+    barrierefrei?: boolean;
 };
