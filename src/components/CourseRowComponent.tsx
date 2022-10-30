@@ -1,4 +1,5 @@
 import { View, TouchableOpacity, Text } from 'react-native';
+import { Badge, Button, Card, Title, Paragraph, Chip } from 'react-native-paper';
 import React from 'react';
 import { useTailwind } from 'tailwind-rn/dist';
 import * as Localization from 'expo-localization';
@@ -9,28 +10,27 @@ const CourseRowComponent: React.FC<Props> = ({ course }) => {
   const tw = useTailwind();
   console.log(course);
   return (
-    <TouchableOpacity>
-      <View
-        style={tw(
-          'flex flex-row justify-between border-green-600 mb-1 bg-gray-200 rounded p-2'
-        )}
-      >
-        <View>
-          <Text>{course.titel}</Text>
-
-          {course.termine?.length && (
-            <Text style={{ color: 'white', marginLeft: 5 }}>
-              {(new Date(course.termine[
-                //Object.keys(course.termine)[0]
-                0
-              ].datum)).toLocaleDateString(Localization.locale, {
-                weekday: 'long'
-              })}{' '}
-            </Text>
-          )}
-        </View>
-      </View>
-    </TouchableOpacity>
+    <>
+      {course.termine?.length && (
+        <Card style={{marginBottom: '10px'}}>
+        <Card.Content>
+          <Title>{course.titel}</Title>
+          <Paragraph>{course.beschreibung}</Paragraph>
+          <Chip style={{marginTop: '5px'}}>{(new Date(course.termine[
+            //Object.keys(course.termine)[0]
+            0
+          ].datum)).toLocaleDateString(Localization.locale, {
+            weekday: 'long'
+          })}{' '}
+          </Chip>
+        </Card.Content>
+        <Card.Actions>
+          <Button mode="outlined" textColor="#008800">Cancel</Button>
+          <Button buttonColor="#00aa00">Ok</Button>
+        </Card.Actions>
+      </Card>
+      )}
+    </>
   );
 };
 

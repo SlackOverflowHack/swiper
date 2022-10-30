@@ -2,7 +2,7 @@ type Kurs = {
     id: string;
     titel: string;
     beschreibung: string;
-    schlachwoerter: string[];
+    schlagwoerter: string[];
     kontakt: Kontakt;
     ort: Ort;
     termine: {

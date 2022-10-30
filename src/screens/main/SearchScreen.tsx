@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 import HeaderComponent from '../../components/HeaderComponent';
 import { useTailwind } from 'tailwind-rn/dist';
 import CourseRowComponent from '../../components/CourseRowComponent';
-import { collection, query, getDocs } from 'firebase/firestore';
+import { collection, query, getDocs, onSnapshot } from 'firebase/firestore';
 import { firebaseDb } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import { Localize } from '../../localized';
@@ -21,28 +21,34 @@ const SearchScreen = () => {
   const [courses, setCourses] = useState<Kurs[]>([]);
   const [loading, setLoading] = useState(true);
   const [textFilter, settextFilter] = useState('');
-  const { user } = useAuth();
+  const user = useAuth().user as unknown as User;
 
   useEffect(() => {
-    setLoading(true);
-    getDocs(query(collection(firebaseDb, 'courses'))).then((result) => {
-      setCourses(
-        result.docs
-          .filter(
-            (course) =>
-              !(course.data().permanentMembers as string[]).find(
-                (v) => v === user?.uid
-              )
-          )
-          .map((doc) => ({
-            ...(doc.data() as unknown as Kurs),
-            id: doc.id
-          }))
-          .slice(0, 250)
-      );
+    return onSnapshot(collection(firebaseDb, 'courses'), (result) => {
+      const fireCourses: Kurs[] = [];
+
+      result.docs.forEach((doc) => {
+        let course: Kurs = doc.data() as unknown as Kurs;
+        course.id = doc.id;
+
+        if(textFilter === "" ||
+         (course.titel.includes(textFilter) && textFilter !== "") ||
+         (course.beschreibung.includes(textFilter) && textFilter !== "")) {
+
+          Object.entries(course.termine).forEach(([key, termin]) => {
+            if(!termin.anmeldungen.includes(user.uid)) {
+              fireCourses.push(course);
+            }
+          });
+        }
+      });
+
+      setCourses(fireCourses);
+      console.log(fireCourses.length);
       setLoading(false);
     });
-  }, []);
+  }, [textFilter]);
+
 
   return loading ? (
     <View style={tw('flex-1 items-center justify-center')}>

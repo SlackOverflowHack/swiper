@@ -15,7 +15,7 @@ import { Entypo, AntDesign } from '@expo/vector-icons';
 import HeaderComponent from '../../components/HeaderComponent';
 import { Localize } from '../../localized';
 import SwiperCard from '../../components/swiper/SwiperCard';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import { firebaseDb } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import { User } from 'firebase/auth';
@@ -40,9 +40,7 @@ const SwipeScreen = () => {
 
   useEffect(() => {
     console.log(Constants.expoConfig?.extra?.SWIPEBACK_API);
-    getDocs(collection(firebaseDb, 'courses')).then((result) => {
-      console.log(result.docs.length);
-
+    return onSnapshot(collection(firebaseDb, 'courses'), (result) => {
       const fireCourses: Kurs[] = [];
 
       result.docs.forEach((doc) => {

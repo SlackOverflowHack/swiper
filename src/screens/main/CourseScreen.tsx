@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { View, ActivityIndicator, FlatList, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import CourseRowComponent from '../../components/CourseRowComponent';
 import HeaderComponent from '../../components/HeaderComponent';
 import { useTailwind } from 'tailwind-rn/dist';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import { firebaseDb } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import { User } from 'firebase/auth';
@@ -15,11 +15,9 @@ const CourseScreen = () => {
   const [courses, setCourses] = useState<Kurs[]>([]);
   const user = useAuth().user as unknown as User;
 
-  const mycurses = [];
   useEffect(() => {
     setLoading(true);
-    console.log("foo");
-    getDocs(collection(firebaseDb, 'courses')).then((result) => {
+    return onSnapshot(collection(firebaseDb, 'courses'), (result) => {
       const fireCourses: Kurs[] = [];
 
       result.docs.forEach((doc) => {
@@ -46,12 +44,11 @@ const CourseScreen = () => {
       });
 
       setCourses(fireCourses);
-      console.log(fireCourses);
       setLoading(false);
     });
+
   }, []);
 
-  console.log(courses);
 
   return loading ? (
     <View style={tw('flex-1 items-center justify-center')}>
