@@ -19,63 +19,19 @@ import { getMatchedUserInfo } from '../lib/getMatchedUserInfo';
 import useAuth from '../hooks/useAuth';
 import SenderMessage from '../components/SenderMessage';
 import ReceiverMessage from '../components/ReceiverMessage';
-import {
-  addDoc,
-  onSnapshot,
-  collection,
-  serverTimestamp,
-  query,
-  orderBy
-} from '@firebase/firestore';
-import { firebaseDb } from '../firebase';
 import { Localize } from '../localized';
 
 const ChatScreen = () => {
   const tw = useTailwind();
   const { user } = useAuth();
-  const {
-    params: { users, usersMatched, id }
-  } = useRoute<RouteProp<RootStackParamList, 'Chat'>>();
-  const matchedUser = getMatchedUserInfo(users, user?.uid!);
+  const route = useRoute<RouteProp<RootStackParamList, 'Chat'>>();
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
 
   const sendMessage = async () => {
-    await addDoc(collection(firebaseDb, 'messages', id, 'messages'), {
-      userId: user?.uid!,
-      message: input,
-      timestamp: serverTimestamp()
-    });
-
     setInput('');
   };
-
-  useEffect(() => {
-    return onSnapshot(
-      query(
-        collection(firebaseDb, 'messages', id, 'messages'),
-        orderBy('timestamp', 'desc')
-      ),
-      (snapshot) => {
-        setMessages(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            message: (doc.data() as Message).message,
-            userId: (doc.data() as Message).userId
-          }))
-        );
-      }
-    );
-  }, [id]);
-
   return (
     <SafeAreaView style={tw('flex-1')}>
-      <ChatHeaderComponent
-        image={matchedUser.photoUrl}
-        title={matchedUser.displayName}
-        callEnabled={true}
-        route='Chats'
-      />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={tw('flex-1')}

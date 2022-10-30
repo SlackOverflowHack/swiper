@@ -1,16 +1,16 @@
 import React, { useLayoutEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import InterestsScreen from '../screens/InterestsScreen';
-import SwipeScreen from '../screens/SwipeScreen';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
-import EditProfileScreen from '../screens/EditProfileScreen';
-import useAuth from '../hooks/useAuth';
+import { FontAwesome, Entypo, MaterialIcons } from '@expo/vector-icons';
+import { Localize } from '../localized';
+import DummyScreen from '../screens/DummyScreen';
+import SwipeScreen from '../screens/main/SwipeScreen';
+import SearchScreen from '../screens/main/SearchScreen';
 
 export type TabStackParamList = {
-  Interests: undefined;
+  Search: undefined;
   Swiper: undefined;
-  Home: undefined;
+  MeineKurse: undefined;
 };
 
 const Tabs = createBottomTabNavigator<TabStackParamList>();
@@ -32,30 +32,31 @@ function TabNavigator(): JSX.Element {
         headerShown: false,
         tabBarInactiveTintColor: 'white',
         tabBarActiveTintColor: '#630300',
-        tabBarActiveBackgroundColor: '#FF5864',
-        tabBarInactiveBackgroundColor: '#FF5864',
+        tabBarActiveBackgroundColor: '#008800',
+        tabBarInactiveBackgroundColor: '#00AA00',
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         tabBarIcon: ({ focused, color, size }) => {
           switch (route.name) {
-            case 'Interests':
+            case 'MeineKurse':
               return (
                 <Entypo
-                  name='chat'
+                  name='open-book'
                   size={size}
                   color={focused ? '#630300' : 'white'}
                 />
               );
-            case 'Home':
+            case 'Search':
               return (
-                <Entypo
-                  name='home'
+                <FontAwesome
+                  name='search'
                   size={size}
                   color={focused ? '#630300' : 'white'}
                 />
               );
             case 'Swiper':
               return (
-                <FontAwesome
-                  name='user'
+                <MaterialIcons
+                  name='explore'
                   size={size}
                   color={focused ? '#630300' : 'white'}
                 />
@@ -64,15 +65,27 @@ function TabNavigator(): JSX.Element {
         }
       })}
     >
-      <Tabs.Screen name='Home' component={EditProfileScreen} options={{
-          tabBarLabel: 'Home'
-      }}/>
-      <Tabs.Screen name='Swiper' component={SwipeScreen} options={{
-          tabBarLabel: 'Swipe around'
-      }}/>
-      <Tabs.Screen name='Interests' component={InterestsScreen} options={{
-          tabBarLabel: 'Interests'
-      }}/>
+      <Tabs.Screen
+        name='Swiper'
+        component={SwipeScreen}
+        options={{
+          tabBarLabel: Localize('tabSwiperLabel')
+        }}
+      />
+      <Tabs.Screen
+        name='Search'
+        component={SearchScreen}
+        options={{
+          tabBarLabel: Localize('tabSearchLabel')
+        }}
+      />
+      <Tabs.Screen
+        name='MeineKurse'
+        component={DummyScreen}
+        options={{
+          tabBarLabel: Localize('tabMyStuffLabel')
+        }}
+      />
     </Tabs.Navigator>
   );
 }

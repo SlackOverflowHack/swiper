@@ -23,8 +23,11 @@ const AuthContext = createContext<{
   loading: boolean;
 }>({
   user: null,
-  login: async (a, b) => {},
-  register: async (a, b) => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  login: async () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  register: async () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   logout: async () => {},
   loading: true
 });

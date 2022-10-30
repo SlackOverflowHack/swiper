@@ -2,63 +2,61 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigator from './TabNavigator';
 import useAuth from '../hooks/useAuth';
-import { View } from 'react-native';
-import ChatsScreen from '../screens/InterestsScreen';
-import EditProfileScreen from '../screens/EditProfileScreen';
-import MatchScreen from '../screens/MatchScreen';
+import { ActivityIndicator, View } from 'react-native';
 import LoginScreen from '../screens/LoginScreen';
+import { useTailwind } from 'tailwind-rn/dist';
+import DummyScreen from '../screens/DummyScreen';
+import RegisterScreen from '../screens/REgisterScreen';
+import DetailsScreen from '../screens/DetailsScreen';
 
 export type RootStackParamList = {
-  Main: undefined;
-  Chat: ChatMatch;
   Login: undefined;
-  EditProfile: undefined;
-  Match: {
-    userProfile: Profile;
-    matchedProfile: Profile
-  };
+  Register: undefined;
+
+  Main: undefined;
+
+  KursDetails: { course: Veranstaltung };
+
+  Settings: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
+  const tw = useTailwind();
   const { user, loading } = useAuth();
   return loading ? (
-    <View></View>
+    <View style={tw('flex-1 items-center justify-center')}>
+      <ActivityIndicator size='large' color='#00ff00' />
+    </View>
   ) : (
     <RootStack.Navigator
       screenOptions={{
-        headerShown: false
+        headerShown: false,
+        title: 'SportSwiper'
       }}
     >
       {user ? (
         <React.Fragment>
           <RootStack.Group>
             <RootStack.Screen name='Main' component={TabNavigator} />
-            <RootStack.Screen name='Chat' component={ChatsScreen} />
           </RootStack.Group>
           <RootStack.Group
             screenOptions={{
               presentation: 'modal'
             }}
           >
-            <RootStack.Screen
-              name='EditProfile'
-              component={EditProfileScreen}
-            /> 
-          </RootStack.Group>
-          <RootStack.Group
-            screenOptions={{
-              presentation: 'transparentModal'
-            }}
-          >
-            <RootStack.Screen name='Match' component={MatchScreen} />
+            <RootStack.Screen name='KursDetails' component={DetailsScreen} />
+            <RootStack.Screen name='Settings' component={DummyScreen} />
           </RootStack.Group>
         </React.Fragment>
       ) : (
-        <RootStack.Group>
-          <RootStack.Screen name='Login' component={LoginScreen} />
-        </RootStack.Group>
+        <React.Fragment>
+          <RootStack.Group>
+            <RootStack.Screen name='Login' component={LoginScreen} />
+            <RootStack.Screen name='Register' component={RegisterScreen} />
+          </RootStack.Group>
+        </React.Fragment>
       )}
     </RootStack.Navigator>
   );

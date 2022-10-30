@@ -5,6 +5,7 @@ import { getReactNativePersistence } from 'firebase/auth/react-native';
 import * as SecureStorage from 'expo-secure-store';
 import { Buffer } from "buffer";
 import { getFirestore } from '@firebase/firestore';
+import { Platform } from 'react-native';
 
 const firebaseConfig = {
     apiKey: Constants.expoConfig?.extra?.firebaseApiKey,
@@ -23,9 +24,9 @@ try
 {
     a = initializeAuth(firebaseApp, {
         persistence: getReactNativePersistence({
-            getItem: (key) => SecureStorage.getItemAsync(keyEncode(key)),
-            removeItem: (key) => SecureStorage.deleteItemAsync(keyEncode(key)),
-            setItem: (key, value) => SecureStorage.setItemAsync(keyEncode(key), value)
+            getItem: (key) => Platform.OS === 'web' ? Promise.resolve(localStorage.getItem(keyEncode(key))) : SecureStorage.getItemAsync(keyEncode(key)),
+            removeItem: (key) => Platform.OS === 'web' ? Promise.resolve(localStorage.removeItem(keyEncode(key))) : SecureStorage.deleteItemAsync(keyEncode(key)),
+            setItem: (key, value) => Platform.OS === 'web' ? Promise.resolve(localStorage.setItem(keyEncode(key), value)) : SecureStorage.setItemAsync(keyEncode(key), value)
 
         }),
         popupRedirectResolver: undefined

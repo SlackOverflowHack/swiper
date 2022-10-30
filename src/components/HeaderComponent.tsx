@@ -1,34 +1,31 @@
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useTailwind } from 'tailwind-rn/dist';
 import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
-import { ChatsScreenNavigationProps } from '../screens/InterestsScreen';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { RootStackParamList } from '../navigation/RootNavigator';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Localize } from '../localized';
 
 const HeaderComponent = () => {
   const tw = useTailwind();
   const { logout } = useAuth();
-  const navigation = useNavigation<ChatsScreenNavigationProps>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
     <View style={tw('flex-row items-center justify-between w-full pt-4 px-5')}>
-      <TouchableOpacity onPress={logout}>
-        <Image
-          style={tw('h-10 w-10 rounded-full')}
-          source={{
-            uri: 'https://xsgames.co/randomusers/assets/avatars/male/32.jpg'
-          }}
-        />
+      <TouchableOpacity
+        onPress={logout}
+        style={tw('px-2 py-1 rounded-lg border-2 border-red-600')}
+      >
+        <Text style={tw('text-red-600 font-bold')}>
+          {Localize('mainLogoutLabel')}
+        </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
-        {/* <Image
-          style={tw('h-14 w-14 rounded-full')}
-          source={require('../logo.png')}
-        /> */}
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Chats')}>
-        <Ionicons name='chatbubble-sharp' size={30} color={'#FF5864'} />
+      <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+        <FontAwesome name='gear' size={30} color={'#00AA00'} />
       </TouchableOpacity>
     </View>
   );

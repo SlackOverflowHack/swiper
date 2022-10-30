@@ -1,20 +1,21 @@
 import * as Localization from 'expo-localization';
 import { I18n, Scope, TranslateOptions } from 'i18n-js';
 import { I18nManager } from 'react-native';
-import { de } from './locales/de';
 import { en } from './locales/en';
 
 export const Localize = (scope: Scope, options?: TranslateOptions) => Localized.getInstance().i18n.t(scope, options);
 
-class Localized {
+class Localized
+{
   private static localized: Localized;
-  public translations: {};
+  public translations: { [locale: string]: LocaleStrings; };
   public i18n: I18n;
 
-  private constructor() {
+  private constructor()
+  {
     this.translations = {
-      'de': de,
-      'de-DE': de,
+      'de': en,
+      'de-DE': en,
       'en': en,
       'en-EN': en,
     };
@@ -28,8 +29,10 @@ class Localized {
     this.i18n.enableFallback = true;
   }
 
-  public static getInstance(): Localized {
-    if (!Localized.localized) {
+  public static getInstance(): Localized
+  {
+    if (!Localized.localized)
+    {
       Localized.localized = new Localized();
     }
 
