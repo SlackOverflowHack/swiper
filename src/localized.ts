@@ -1,6 +1,7 @@
 import * as Localization from 'expo-localization';
 import { I18n, Scope, TranslateOptions } from 'i18n-js';
 import { I18nManager } from 'react-native';
+import { de } from './locales/de';
 import { en } from './locales/en';
 
 export const Localize = (scope: Scope, options?: TranslateOptions) => Localized.getInstance().i18n.t(scope, options);
@@ -14,8 +15,8 @@ class Localized
   private constructor()
   {
     this.translations = {
-      'de': en,
-      'de-DE': en,
+      'de': de,
+      'de-DE': de,
       'en': en,
       'en-EN': en,
     };
