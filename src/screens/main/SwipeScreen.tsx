@@ -49,16 +49,17 @@ const SwipeScreen = () => {
         let course: Kurs = doc.data() as unknown as Kurs;
         course.id = doc.id;
 
-        /*
-        (course) =>
-            course.permanentMembers.find((id) => id === user?.uid) ||
-            Object.keys(course.termine).some((k) =>
-              course.termine[parseInt(k)].anmeldungen.find((id) => id === user?.uid)
-            )
-            */
+        if(!course.permanentMembers.includes(user.uid) 
+        && !course.interestedMembers.includes(user.uid) 
+        && !course.uninterestedMembers.includes(user.uid)) {
 
-        fireCourses.push(course);
-      })
+          Object.entries(course.termine).forEach(([key, termin]) => {
+            if(!termin.anmeldungen.includes(user.uid)) {
+              fireCourses.push(course);
+            }
+          });
+        }
+      });
       
       setCourses(fireCourses);
       console.log(fireCourses);
