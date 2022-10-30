@@ -7,31 +7,44 @@ import { useTailwind } from 'tailwind-rn/dist';
 import { collection, getDocs } from 'firebase/firestore';
 import { firebaseDb } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
+import { User } from 'firebase/auth';
 
 const CourseScreen = () => {
   const tw = useTailwind();
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState<Kurs[]>([]);
-  const { user } = useAuth();
+  const user = useAuth().user as unknown as User;
 
   const mycurses = [];
   useEffect(() => {
     setLoading(true);
     console.log("foo");
     getDocs(collection(firebaseDb, 'courses')).then((result) => {
-      console.log(result.docs.length);
-      const fireCourses = result.docs
-        .map((doc) => ({
-          ...(doc.data() as unknown as Kurs),
-          id: doc.id
-        }))
-        .filter(
-          (course) =>
-            course.permanentMembers.find((id) => id === user?.uid) ||
-            Object.keys(course.termine).some((k) =>
-              course.termine[parseInt(k)].anmeldungen.find((id) => id === user?.uid)
-            )
-        );
+      const fireCourses: Kurs[] = [];
+
+      result.docs.forEach((doc) => {
+        let course: Kurs = doc.data() as unknown as Kurs;
+        course.id = doc.id;
+
+        if(course.permanentMembers.includes(user.uid) || course.interestedMembers.includes(user.uid)) {
+          let foundInAbmeldungen = false;
+          Object.entries(course.termine).forEach(([key, termin]) => {
+            if(termin.abmeldungen.includes(user.uid)) {
+              foundInAbmeldungen = true;
+            }
+          });
+          if(!foundInAbmeldungen) {
+            fireCourses.push(course);
+          }
+        } else {
+          Object.entries(course.termine).forEach(([key, termin]) => {
+            if(termin.anmeldungen.includes(user.uid)) {
+              fireCourses.push(course);
+            }
+          });
+        }
+      });
+
       setCourses(fireCourses);
       console.log(fireCourses);
       setLoading(false);
